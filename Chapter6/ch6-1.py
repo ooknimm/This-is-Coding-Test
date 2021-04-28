@@ -35,24 +35,44 @@ def partition(arr, lo, hi):
     left = lo + 1
     right = hi
     while left <= right:
-        while left <= hi and arr[left] <= arr[pivot]:
+        while left <= hi and arr[left] < arr[pivot]:
             left += 1
-        while lo < right and arr[right] >= arr[pivot]:
+        while right > lo and arr[right] > arr[pivot]:
             right -= 1
-        if left > right:
-            arr[pivot], arr[right] = arr[right], arr[pivot]
+        
+        if right <= left:
+            arr[right], arr[pivot] = arr[pivot], arr[right]
         else:
-            arr[left], arr[right] = arr[right], arr[left]
+            arr[right], arr[left] = arr[left], arr[right]
 
     return right
 
-def quick_sort(arr, lo, hi):
-    
+def quick_sort_left_pivot(arr, lo, hi):
     if lo < hi:
-        print(lo, hi)
         pivot = partition(arr, lo, hi)
-        quick_sort(arr, lo, pivot-1)
-        quick_sort(arr, pivot+1, hi)  
+        quick_sort_left_pivot(arr, lo, pivot-1)
+        quick_sort_left_pivot(arr, pivot+1, hi)
         return arr
 
-print(quick_sort(arr_3, 0, len(arr_3)-1))
+print(quick_sort_left_pivot(arr_3, 0, len(arr_3)-1))
+
+
+arr_4 = [4,9,7,2,3,0,5,1,6,8]
+
+def quick_sort_right_pivot(arr, lo, hi):
+    if lo < hi:
+        pivot = hi
+        left = lo
+        for right in range(lo, hi):
+            if arr[pivot] > arr[right]:
+                arr[left], arr[right] = arr[right], arr[left]
+                left += 1
+        arr[pivot], arr[left] = arr[left], arr[pivot]
+        pivot = left
+
+        quick_sort_right_pivot(arr, pivot+1, hi)
+        quick_sort_right_pivot(arr, lo, pivot-1)
+
+        return arr
+
+print(quick_sort_right_pivot(arr_4, 0, len(arr_4)-1))
