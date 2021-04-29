@@ -13,6 +13,7 @@ def selection_sort(arr):
 
 print(selection_sort(arr))
 
+
 arr_2 = [7,5,9,0,3,1,6,2,4,8]
 
 def insertion_sort(arr):
@@ -76,3 +77,73 @@ def quick_sort_right_pivot(arr, lo, hi):
         return arr
 
 print(quick_sort_right_pivot(arr_4, 0, len(arr_4)-1))
+
+
+arr_5 = [4,9,7,2,3,0,5,1,6,8]
+
+def quick_sort_mid_pivot(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    pivot = arr[len(arr) // 2]
+
+    left = []
+    right = []
+
+    for i in range(len(arr)):
+        if pivot > arr[i]:
+            left.append(arr[i])
+        elif pivot < arr[i]:
+            right.append(arr[i])
+    
+    left_result = quick_sort_mid_pivot(left)
+    right_result = quick_sort_mid_pivot(right)
+
+    return left_result + [pivot] +  right_result
+
+
+print(quick_sort_mid_pivot(arr_5))
+
+
+arr_6 = [4,9,7,2,3,0,5,1,6,8]
+
+def merge(left_arr, right_arr):
+    result = []
+    while right_arr or left_arr:
+        while right_arr and left_arr:
+            right = right_arr[0]
+            left = left_arr[0]
+            if right < left:
+                result.append(right)
+                right_arr = right_arr[1:]
+            else:
+                result.append(left)
+                left_arr = left_arr[1:]
+        while right_arr:
+            right = right_arr[0]
+            result.append(right)
+            right_arr = right_arr[1:]
+        while left_arr:
+            left = left_arr[0]
+            result.append(left)
+            left_arr = left_arr[1:]
+
+    return result
+
+def merge_sort(arr):
+    if len(arr) == 1:
+        return arr
+    
+    # 분할의 기준이 될 가운데 인덱스
+    mid = len(arr) // 2
+
+    # 분할
+    right_arr = merge_sort(arr[:mid])
+    left_arr = merge_sort(arr[mid:])
+
+    # 정복
+    result = merge(left_arr, right_arr)
+
+    return result
+
+print(merge_sort(arr_6))
