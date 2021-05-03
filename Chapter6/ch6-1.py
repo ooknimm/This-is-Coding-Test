@@ -147,3 +147,36 @@ def merge_sort(arr):
     return result
 
 print(merge_sort(arr_6))
+
+
+arr_7 = [4,9,7,2,3,0,5,1,6,8]
+
+def merge_sort_2(arr):
+    if len(arr) > 1:
+        mid = len(arr) // 2
+        left_arr = merge_sort_2(arr[:mid])
+        right_arr = merge_sort_2(arr[mid:])
+
+        lo, hi = 0, 0
+        i = 0
+        while len(left_arr) > lo and len(right_arr) > hi:
+            if left_arr[lo] > right_arr[hi]:
+                arr[i] = right_arr[hi]
+                hi += 1
+                i += 1
+            else:
+                arr[i] = left_arr[lo]
+                lo += 1
+                i += 1
+        while len(left_arr) > lo:
+            arr[i] = left_arr[lo]
+            lo += 1
+            i += 1
+        while len(right_arr) > hi:
+            arr[i] = right_arr[hi]
+            hi += 1
+            i += 1
+        
+    return arr
+
+print(merge_sort_2(arr_7))
