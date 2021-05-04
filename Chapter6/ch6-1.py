@@ -180,3 +180,21 @@ def merge_sort_2(arr):
     return arr
 
 print(merge_sort_2(arr_7))
+
+
+arr_8 = [7,5,9,0,3,1,6,2,9,1,4,8,0,5,2]
+
+def counting_sort(arr):
+    count = [0] * (len(arr) + 1)
+
+    for i in range(len(arr)):
+        count[arr[i]] += 1
+    
+    result = []
+    for i in range(len(count)):
+        for _ in range(count[i]):
+            result.append(i)
+
+    return result
+
+print(counting_sort(arr_8))
